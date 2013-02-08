@@ -7,10 +7,6 @@
 
     $ component install ecarter/dragdrop
 
-## API
-
-   
-
 ## License
 
   MIT
