@@ -42,7 +42,7 @@ Emitter(Dragdrop.prototype);
  */
 
 Dragdrop.prototype.ondragstart = function(e){
-  this.src = e.target;
+  this.src = getDrop(e.target);
   classes(this.src).add('dragging');
   e.dataTransfer.effectAllowed = 'move';
   e.dataTransfer.setData('text/html', this.src.innerHTML);
