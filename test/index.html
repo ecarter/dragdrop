@@ -6,10 +6,12 @@
     <link rel="stylesheet" href="../build/build.css">
     <style type="text/css">
       body {
-        margin: 100px;
-        font: 14/1.6 "Helvetica Neue", helvetica, arial, sans-serif;
+        margin: 60px;
+        font-family: "Helvetica Neue", helvetica, arial, sans-serif;
+        font-size: 18px;
       }
       .list {
+        width: 360px;
         margin: 0;
         padding: 0;
         list-style: none;
@@ -17,9 +19,21 @@
       .list li {
         margin: 0;
         padding: 15px 20px;
-        background: #efefef;
-        border-bottom: 1px solid #ccc;
+        background: whitesmoke;
         cursor: move;
+        font-weight: bold;
+        border: 2px solid white;
+        -moz-transition: all 250ms;
+        -webkit-transition: all 250ms;
+        transition: all 250ms;
+      }
+      .list li.dragging {
+        border: 2px dashed #333;
+        background: lightyellow;
+        opacity: 0.4;
+      }
+      .list li.over {
+        background: lightblue;
       }
     </style>
   </head>
@@ -37,12 +51,6 @@
       var Dragdrop = require('dragdrop');
       var el = document.querySelector('ul');
       Dragdrop(el);
-      /*
-      var items = document.querySelectorAll('li');
-      for (var i=0; i < items.length; i++) {
-        Dragdrop(items[i]);
-      }
-      */
     </script>
   </body>
 </html>
