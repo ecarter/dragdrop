@@ -3,7 +3,12 @@
   "repo": "ecarter/dragdrop",
   "description": "simple drag and drop component",
   "version": "0.0.1",
-  "keywords": [],
+  "keywords": [
+    "drag",
+    "drop",
+    "dragdrop",
+    "sortable"
+  ],
   "dependencies": {
     "component/classes": "*",
     "component/emitter": "*",
