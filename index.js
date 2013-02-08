@@ -42,11 +42,10 @@ Emitter(Dragdrop.prototype);
  */
 
 Dragdrop.prototype.ondragstart = function(e){
-  console.log('drag start');
   this.src = e.target;
-  //e.dataTransfer.effectAllowed = 'move';
-  //e.dataTransfer.setData('text/html', this.src);
-  console.log('dragstart src', this.src);
+  classes(this.src).add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/html', this.src.innerHTML);
 };
 
 /**
@@ -54,7 +53,6 @@ Dragdrop.prototype.ondragstart = function(e){
  */
 
 Dragdrop.prototype.ondragenter = function(e){
-  console.log('drag enter');
 };
 
 /**
@@ -62,7 +60,8 @@ Dragdrop.prototype.ondragenter = function(e){
  */
 
 Dragdrop.prototype.ondragover = function(e){
-  console.log('drag over');
+  e.preventDefault();
+  classes(e.target).add('over');
 };
 
 /**
@@ -70,7 +69,8 @@ Dragdrop.prototype.ondragover = function(e){
  */
 
 Dragdrop.prototype.ondragleave = function(e){
-  console.log('drag leave');
+  e.preventDefault();
+  classes(e.target).remove('over');
 };
 
 /**
@@ -78,11 +78,9 @@ Dragdrop.prototype.ondragleave = function(e){
  */
 
 Dragdrop.prototype.ondragend = function(e){
-  console.log('drag end', this);
   e.preventDefault();
   e.stopPropagation();
-  this.src.innerHTML = this.innerHTML;
-  this.innerHTML = e.dataTransfer.getData('text/html');
+  classes(this.src).remove('dragging');
 };
 
 /**
@@ -90,10 +88,12 @@ Dragdrop.prototype.ondragend = function(e){
  */
 
 Dragdrop.prototype.ondrop = function(e){
-  console.log('drop src', this);
   e.preventDefault();
   e.stopPropagation();
-  this.src.innerHTML = this.innerHTML;
-  this.innerHTML = e.dataTransfer.getData('text/html');
+  if (this.src != e.target) {
+    this.src.innerHTML = e.target.innerHTML;
+    e.target.innerHTML = e.dataTransfer.getData('text/html');
+    classes(e.target).remove('over');
+  }
 };
 
