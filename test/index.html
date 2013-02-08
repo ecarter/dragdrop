@@ -1,0 +1,48 @@
+<!DOCTYPE 5>
+<html>
+  <head>
+    <title>dragdrop</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="../build/build.css">
+    <style type="text/css">
+      body {
+        margin: 100px;
+        font: 14/1.6 "Helvetica Neue", helvetica, arial, sans-serif;
+      }
+      .list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .list li {
+        margin: 0;
+        padding: 15px 20px;
+        background: #efefef;
+        border-bottom: 1px solid #ccc;
+        cursor: move;
+      }
+    </style>
+  </head>
+  <body>
+    <ul class="list">
+      <li draggable="true">Item 1</li>
+      <li draggable="true">Item 2</li>
+      <li draggable="true">Item 3</li>
+      <li draggable="true">Item 4</li>
+      <li draggable="true">Item 5</li>
+      <li draggable="true">Item 6</li>
+    </ul>
+    <script src="../build/build.js"></script>
+    <script>
+      var Dragdrop = require('dragdrop');
+      var el = document.querySelector('ul');
+      Dragdrop(el);
+      /*
+      var items = document.querySelectorAll('li');
+      for (var i=0; i < items.length; i++) {
+        Dragdrop(items[i]);
+      }
+      */
+    </script>
+  </body>
+</html>

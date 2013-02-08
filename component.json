@@ -1,0 +1,20 @@
+{
+  "name": "dragdrop",
+  "repo": "ecarter/dragdrop",
+  "description": "simple drag and drop component",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {
+    "component/classes": "*",
+    "component/emitter": "*",
+    "component/events": "*"
+  },
+  "development": {},
+  "license": "MIT",
+  "scripts": [
+    "index.js"
+  ],
+  "styles": [
+    "dragdrop.css"
+  ]
+}
