@@ -90,7 +90,8 @@ Dragdrop.prototype.ondragend = function(e){
 Dragdrop.prototype.ondrop = function(e){
   e.preventDefault();
   e.stopPropagation();
-  if (this.src != e.target) {
+
+  if (this.src != e.target && e.target.parentNode == this.el) {
     this.src.innerHTML = e.target.innerHTML;
     e.target.innerHTML = e.dataTransfer.getData('text/html');
     classes(e.target).remove('over');
