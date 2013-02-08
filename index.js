@@ -91,10 +91,36 @@ Dragdrop.prototype.ondrop = function(e){
   e.preventDefault();
   e.stopPropagation();
 
-  if (this.src != e.target && e.target.parentNode == this.el) {
-    this.src.innerHTML = e.target.innerHTML;
-    e.target.innerHTML = e.dataTransfer.getData('text/html');
-    classes(e.target).remove('over');
+  var target = getDrop(e.target);
+
+  if (target && this.src != target) {
+    this.src.innerHTML = target.innerHTML;
+    target.innerHTML = e.dataTransfer.getData('text/html');
   }
+
+  if (target) classes(target).remove('over');
+  classes(this.src).remove('over');
 };
 
+/**
+ * Finds droppable parent node.
+ */
+
+function getDrop(el) {
+  var p = el.parentNode;
+  var parents = [];
+  var drop;
+
+  while (p !== null) {
+    var n = p;
+    parents.push(n);
+    p = n.parentNode;
+  }
+
+  for (var i=0; i < parents.length; i++) {
+    var node = parents[i];
+    if (node.draggable && !drop) drop = node;
+  }
+
+  return drop || el;
+}
