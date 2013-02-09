@@ -48,9 +48,39 @@
     </ul>
     <script src="../build/build.js"></script>
     <script>
+
       var Dragdrop = require('dragdrop');
-      var el = document.querySelector('ul');
-      Dragdrop(el);
+      var list = document.querySelector('ul');
+      var draggable = Dragdrop(list);
+
+      draggable.on('start', function(el){
+        console.log('start', el);
+      });
+
+      draggable.on('enter', function(el){
+        console.log('enter', el);
+      });
+
+      draggable.on('over', function(el){
+        console.log('over', el);
+      });
+
+      draggable.on('leave', function(el){
+        console.log('leave', el);
+      });
+
+      draggable.on('end', function(el){
+        console.log('end', el);
+      });
+
+      draggable.on('drop', function(drag, drop){
+        var dragged = drag.cloneNode(true);
+        var dropped = drop.cloneNode(true);
+        list.replaceChild(dragged, drop);
+        list.replaceChild(dropped, drag);
+        console.log('dropped element', drag, 'to element', drop);
+      });
+
     </script>
   </body>
 </html>
