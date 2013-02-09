@@ -42,10 +42,9 @@ Emitter(Dragdrop.prototype);
  */
 
 Dragdrop.prototype.ondragstart = function(e){
-  this.src = getDrop(e.target);
+  this.src = target(e.target);
   classes(this.src).add('dragging');
-  e.dataTransfer.effectAllowed = 'move';
-  e.dataTransfer.setData('text/html', this.src.innerHTML);
+  this.emit('start', this.src);
 };
 
 /**
@@ -53,6 +52,7 @@ Dragdrop.prototype.ondragstart = function(e){
  */
 
 Dragdrop.prototype.ondragenter = function(e){
+  this.emit('enter', e.target);
 };
 
 /**
@@ -62,6 +62,7 @@ Dragdrop.prototype.ondragenter = function(e){
 Dragdrop.prototype.ondragover = function(e){
   e.preventDefault();
   classes(e.target).add('over');
+  this.emit('over', e.target);
 };
 
 /**
@@ -71,6 +72,7 @@ Dragdrop.prototype.ondragover = function(e){
 Dragdrop.prototype.ondragleave = function(e){
   e.preventDefault();
   classes(e.target).remove('over');
+  this.emit('leave', e.target);
 };
 
 /**
@@ -81,6 +83,7 @@ Dragdrop.prototype.ondragend = function(e){
   e.preventDefault();
   e.stopPropagation();
   classes(this.src).remove('dragging');
+  this.emit('end', this.src);
 };
 
 /**
@@ -90,23 +93,17 @@ Dragdrop.prototype.ondragend = function(e){
 Dragdrop.prototype.ondrop = function(e){
   e.preventDefault();
   e.stopPropagation();
-
-  var target = getDrop(e.target);
-
-  if (target && this.src != target) {
-    this.src.innerHTML = target.innerHTML;
-    target.innerHTML = e.dataTransfer.getData('text/html');
-  }
-
-  if (target) classes(target).remove('over');
-  classes(this.src).remove('over');
+  var t = target(e.target);
+  if (t) classes(t).remove('over');
+  classes(this.src).remove('dragging').remove('over');
+  this.emit('drop', this.src, t);
 };
 
 /**
- * Finds droppable parent node.
+ * Finds draggable or droppable parent node.
  */
 
-function getDrop(el) {
+function target(el) {
   var p = el.parentNode;
   var parents = [];
   var drop;
@@ -119,7 +116,7 @@ function getDrop(el) {
 
   for (var i=0; i < parents.length; i++) {
     var node = parents[i];
-    if (node.draggable && !drop) drop = node;
+    if ((node.draggable || node.droppable) && !drop) drop = node;
   }
 
   return drop || el;
