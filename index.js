@@ -82,7 +82,7 @@ Dragdrop.prototype.ondragleave = function(e){
 Dragdrop.prototype.ondragend = function(e){
   e.preventDefault();
   e.stopPropagation();
-  classes(this.src).remove('dragging');
+  if (this.src) classes(this.src).remove('dragging');
   this.emit('end', this.src);
 };
 
@@ -95,7 +95,7 @@ Dragdrop.prototype.ondrop = function(e){
   e.stopPropagation();
   var t = target(e.target);
   if (t) classes(t).remove('over');
-  classes(this.src).remove('dragging').remove('over');
+  if (this.src) classes(this.src).remove('dragging').remove('over');
   this.emit('drop', this.src, t);
 };
 
