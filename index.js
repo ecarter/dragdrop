@@ -52,7 +52,8 @@ Dragdrop.prototype.ondragstart = function(e){
  */
 
 Dragdrop.prototype.ondragenter = function(e){
-  this.emit('enter', e.target);
+  var t = target(e.target);
+  this.emit('enter', t);
 };
 
 /**
@@ -61,8 +62,9 @@ Dragdrop.prototype.ondragenter = function(e){
 
 Dragdrop.prototype.ondragover = function(e){
   e.preventDefault();
-  classes(e.target).add('over');
-  this.emit('over', e.target);
+  var t = target(e.target);
+  classes(t).add('over');
+  this.emit('over', t);
 };
 
 /**
@@ -71,8 +73,9 @@ Dragdrop.prototype.ondragover = function(e){
 
 Dragdrop.prototype.ondragleave = function(e){
   e.preventDefault();
-  classes(e.target).remove('over');
-  this.emit('leave', e.target);
+  var t = target(e.target);
+  classes(t).remove('over');
+  this.emit('leave', t);
 };
 
 /**
@@ -121,3 +124,4 @@ function target(el) {
 
   return drop || el;
 }
+
