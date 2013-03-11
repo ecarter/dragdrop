@@ -42,7 +42,7 @@ Emitter(Dragdrop.prototype);
  */
 
 Dragdrop.prototype.ondragstart = function(e){
-  this.src = target(e.target);
+  this.src = parent(e.target);
   classes(this.src).add('dragging');
   this.emit('start', this.src);
 };
@@ -54,7 +54,7 @@ Dragdrop.prototype.ondragstart = function(e){
 Dragdrop.prototype.ondragenter = function(e){
   e.preventDefault();
   e.stopPropagation();
-  this.emit('enter', target(e.target));
+  this.emit('enter', parent(e.target));
 };
 
 /**
@@ -64,7 +64,7 @@ Dragdrop.prototype.ondragenter = function(e){
 Dragdrop.prototype.ondragover = function(e){
   e.preventDefault();
   e.stopPropagation();
-  var target = target(e.target);
+  var target = parent(e.target);
   this.drop = target;
   classes(target).add('over');
   this.emit('over', target);
@@ -77,7 +77,7 @@ Dragdrop.prototype.ondragover = function(e){
 Dragdrop.prototype.ondragleave = function(e){
   e.preventDefault();
   e.stopPropagation();
-  var target = target(e.target);
+  var target = parent(e.target);
   classes(target).remove('over');
   this.emit('leave', target);
 };
@@ -100,7 +100,7 @@ Dragdrop.prototype.ondragend = function(e){
 Dragdrop.prototype.ondrop = function(e){
   e.preventDefault();
   e.stopPropagation();
-  var target = target(e.target);
+  var target = parent(e.target);
   if (target) classes(target).remove('over');
   if (this.src) classes(this.src).remove('dragging').remove('over');
   this.emit('drop', this.src, this.drop);
@@ -110,7 +110,7 @@ Dragdrop.prototype.ondrop = function(e){
  * Finds draggable or droppable parent node.
  */
 
-function target(el) {
+function parent(el) {
   var p = el.parentNode;
   var parents = [];
   var drop;
